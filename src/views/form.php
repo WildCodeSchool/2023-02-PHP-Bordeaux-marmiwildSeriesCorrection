@@ -23,6 +23,7 @@
         <textarea name="description" id="description" cols="30" rows="10"></textarea>
     </div>
     <button>Submit</button>
+    <a href="/">Back home</a>
 </form>
 </body>
 </html>

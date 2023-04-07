@@ -1,15 +1,17 @@
 <?php
 
-require __DIR__.'/controllers/recipe-controller.php';
+require_once __DIR__.'/controllers/RecipeController.php';
 
 $urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$recipeController = new RecipeController();
 
 if ('/' === $urlPath) {
-    browseRecipes();
+    $recipeController->browseRecipe();
+    // browseRecipes();
 } elseif ('/show' === $urlPath && isset($_GET['id'])) {
-    showRecipe($_GET['id']);
+    $recipeController->getRecipeById($_GET['id']);
 } elseif ('/add' === $urlPath) {
-    addRecipe();
+    $recipeController->addRecipe();
 } else {
     header('HTTP/1.1 404 Not Found');
 }

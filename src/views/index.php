@@ -16,5 +16,6 @@
         </li>
     <?php endforeach ?>
 </ul>
+<a href="/add">Add recipe</a>
 </body>
 </html>
