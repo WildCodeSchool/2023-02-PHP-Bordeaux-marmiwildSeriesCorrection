@@ -12,5 +12,7 @@
 <div>
     <?= $recipe['description'] ?>
 </div>
+<a href="/edit?id=<?= $_GET['id']; ?>">Edit</a>
+<a href="/delete?id=<?= $_GET['id']; ?>">Delete</a>
 </body>
 </html>

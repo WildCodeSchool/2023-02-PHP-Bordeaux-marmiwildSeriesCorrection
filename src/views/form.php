@@ -15,15 +15,15 @@
 <form method="post">
     <div>
         <label for="title">Title</label>
-        <input type="text" name="title" id="title">
+        <input type="text" name="title" id="title" value="<?= $recipe['title'] ?? ''; ?>">
     </div>
     <br>
     <div>
         <label for="description">Description</label><br>
-        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+        <textarea name="description" id="description" cols="30" rows="10"><?= $recipe['description'] ?? '' ?></textarea>
     </div>
     <button>Submit</button>
-    <a href="/">Back home</a>
 </form>
+<a href="/">Back home</a>
 </body>
 </html>

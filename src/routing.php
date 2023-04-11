@@ -11,7 +11,13 @@ if ('/' === $urlPath) {
 } elseif ('/show' === $urlPath && isset($_GET['id'])) {
     $recipeController->getRecipeById($_GET['id']);
 } elseif ('/add' === $urlPath) {
-    $recipeController->addRecipe();
-} else {
+    $recipeController->addRecipe($_POST);
+}elseif ('/edit' === $urlPath && isset($_GET['id'])) {
+    $recipeController->editRecipe($_GET['id']);
+}
+elseif ('/delete' === $urlPath && isset($_GET['id'])) {
+   $recipeController->deleteRecipe($_GET['id']);
+}
+else {
     header('HTTP/1.1 404 Not Found');
 }

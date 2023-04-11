@@ -1,12 +1,13 @@
 <?php
-class RecipeModel
-{
-    private PDO $connection;
+require_once 'DBConnexion.php';
 
-    public function __construct()
-    {
-        $this->connection = new \PDO("mysql:host=" . SERVER . ";dbname=" . DATABASE . ";charset=utf8", USER, PASSWORD);
-    }
+class RecipeModel extends DBConnexion
+{
+    /*
+    private int $id;
+    private string $title;
+    private string $description;
+    */
 
     public function getAll(): array
     {
@@ -16,7 +17,6 @@ class RecipeModel
 
     public function getRecipeById(int $id)
     {
-        // Fetching a recipe from database -  assuming the database is okay
         $query = 'SELECT title, description FROM recipe WHERE id=:id';
         $statement = $this->connection->prepare($query);
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
@@ -24,4 +24,44 @@ class RecipeModel
 
         return $recipe = $statement->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function saveRecipe(array $recipe): void
+    {
+        $query = "INSERT INTO recipe(title, description) VALUE (:title, :description)";
+        $statement = $this->connection->prepare($query);
+        $statement->bindValue(":title", $recipe['title'],PDO::PARAM_STR);
+        $statement->bindValue(':description', $recipe['description'], PDO::PARAM_STR);
+
+        $statement->execute();
+
+        $statement->closeCursor();
+    }
+
+    public function editRecipeById(int $id, array $recipe): void
+    {
+        $query = 'UPDATE recipe SET title =:title, description = :description WHERE id=:id';
+
+        $statement = $this->connection->prepare($query);
+
+        $statement->bindValue(':title', $recipe['title'], PDO::PARAM_STR);
+        $statement->bindValue(':description', $recipe['description'], PDO::PARAM_STR);
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        $statement->closeCursor();
+    }
+
+    public function deleteRecipeById(int $id): void
+    {
+        $query = 'DELETE from recipe WHERE id=:id';
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        $statement->closeCursor();
+    }
+
 }
