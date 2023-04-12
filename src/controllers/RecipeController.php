@@ -25,7 +25,7 @@ class RecipeController
         return $recipe;
     }
 
-    function addRecipe(array $recipe): void
+    public function addRecipe(array $recipe): void
     {
         $errors = [];
 
