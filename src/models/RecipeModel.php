@@ -1,5 +1,7 @@
 <?php
-require_once 'DBConnexion.php';
+namespace Src\Models;
+//require_once 'DBConnexion.php';
+use PDO;
 
 class RecipeModel extends DBConnexion
 {
@@ -17,7 +19,7 @@ class RecipeModel extends DBConnexion
 
     public function getRecipeById(int $id)
     {
-        $query = 'SELECT title, description FROM recipe WHERE id=:id';
+        $query = 'SELECT * FROM recipe WHERE id=:id';
         $statement = $this->connection->prepare($query);
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
         $statement->execute();
@@ -29,7 +31,7 @@ class RecipeModel extends DBConnexion
     {
         $query = "INSERT INTO recipe(title, description) VALUE (:title, :description)";
         $statement = $this->connection->prepare($query);
-        $statement->bindValue(":title", $recipe['title'],PDO::PARAM_STR);
+        $statement->bindValue(":title", $recipe['title'], PDO::PARAM_STR);
         $statement->bindValue(':description', $recipe['description'], PDO::PARAM_STR);
 
         $statement->execute();

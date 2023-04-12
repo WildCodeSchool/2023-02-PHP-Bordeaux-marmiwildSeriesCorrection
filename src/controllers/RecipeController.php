@@ -1,31 +1,45 @@
 <?php
+namespace Src\Controllers;
 
-require __DIR__ . '/../models/RecipeModel.php';
+use Src\Models\RecipeModel;
+use Twig\Environment;
+use Twig\Extension\DebugExtension;
+use Twig\Loader\FilesystemLoader;
 
 class RecipeController
 {
     private RecipeModel $model;
+    private Environment $twig;
 
     public function __construct()
     {
         $this->model = new RecipeModel();
+        $loader = new FilesystemLoader(__DIR__ . '/../views/');
+        $this->twig = new Environment($loader,[
+            'debug' => true
+        ]);
+        $this->twig->addExtension(new DebugExtension());
     }
 
-    public function browseRecipe(): void
+    public function browseRecipe(): string
     {
         $recipes = $this->model->getAll();
 
-        require __DIR__ . '/../views/index.php';
+        return $this->twig->render('index.html.twig', [
+            'recipes' => $recipes
+        ]);
     }
 
     public function getRecipeById(int $id): mixed
     {
         $recipe = $this->model->getRecipeById($id);
-        require __DIR__ . '/../views/show.php';
-        return $recipe;
+
+        return $this->twig->render('show.html.twig', [
+            'recipe' => $recipe
+        ]);
     }
 
-    function addRecipe(array $recipe): void
+    function addRecipe(array $recipe): string
     {
         $errors = [];
 
@@ -42,12 +56,13 @@ class RecipeController
             }
         }
 
-        require __DIR__ . '/../views/form.php';
+        return $this->twig->render('form.html.twig');
     }
 
-    public function editRecipe(int $id): void
+    public function editRecipe(int $id): string
     {
         $recipe = $this->model->getRecipeById($id);
+        $errors = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -65,10 +80,13 @@ class RecipeController
             }
         }
 
-        require __DIR__ . '/../views/form.php';
+        return $this->twig->render('edit.html.twig', [
+            'recipe' => $recipe,
+            'errors' => $errors
+        ]);
     }
 
-    public function deleteRecipe(int $id): void
+    public function deleteRecipe(int $id): string
     {
         $recipe = $this->model->getRecipeById($id);
 
@@ -78,7 +96,9 @@ class RecipeController
             header('Location: /');
         }
 
-        require __DIR__ . '/../views/form.php';
+        return $this->twig->render('delete.html.twig', [
+            'recipe' => $recipe,
+        ]);
     }
 
     public function validate(array $recipe): array

@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Edit recipe</title>
+</head>
+<body>
+<h1>Edit Recipe : {{ recipe.title }}</h1>
+{% if errors | length > O %}
+    {% for error in erros %}
+        <li>{{ error }}</li>
+    {% endfor %}
+{% endif %}
+
+{{ include('form.html.twig', {'button_label': 'Update'}) }}
+</body>
+</html>

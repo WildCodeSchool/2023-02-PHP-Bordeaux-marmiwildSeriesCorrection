@@ -8,13 +8,13 @@
 <body>
 <h1>List of Recipes</h1>
 <ul>
-    <?php foreach ($recipes as $recipe) : ?>
-        <li>
-            <a href="show?id=<?= $recipe['id'] ?>">
-                <?= $recipe['title'] ?>
-            </a>
-        </li>
-    <?php endforeach ?>
+    {% if recipes | length > 0 %}
+        {% for recipe in recipes %}
+            <li><a href="/show?id={{ recipe.id }}">{{ recipe.title }}</a></li>
+        {% endfor %}
+        {% else %}
+        <li><strong>No Recipes</strong></li>
+    {% endif %}
 </ul>
 <a href="/add">Add recipe</a>
 </body>
