@@ -7,12 +7,6 @@
 </head>
 <body>
 <h1>Delete Recipe : {{ recipe.title }}</h1>
-{% if errors | length > O %}
-    {% for error in erros %}
-        <li>{{ error }}</li>
-    {% endfor %}
-{% endif %}
-
 {{ include('form.html.twig', {'button_label': 'Delete'}) }}
 </body>
 </html>
