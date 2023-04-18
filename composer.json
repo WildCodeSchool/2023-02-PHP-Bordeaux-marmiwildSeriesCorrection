@@ -1,0 +1,17 @@
+{
+    "name": "jlbokass/php-advanced-1-material",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Bokassa jean le Grand",
+            "email": "jean-le-grand.bokassa@wildcodeschool.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.5"
+    }
+}
